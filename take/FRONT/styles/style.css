@@ -1,0 +1,147 @@
+* {
+    box-sizing: border-box;
+}
+
+body
+{
+    background: #D3D3D3;
+    color: #000000;
+    font-family: 'Inconsolata', monospace;
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 100%;
+}
+
+.header {
+    border-bottom: 3px solid #FFFFFF;
+}
+
+.header a {
+    background: #000000;
+    color: #FFFFFF; 
+    display: inline-block; 
+    letter-spacing: 3px; 
+    text-decoration: none; 
+    padding: 20px 5px; 
+    width: 100%; 
+    text-align: center; 
+}
+
+.header a:hover {
+    background: #808080;
+}
+
+.header ul {
+    display: flex;
+    list-style: none; 
+    margin: 0; 
+    padding: 0;
+}
+
+.header ul li {
+    flex: 3;
+}
+
+.content {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    min-height: 800px;
+    text-align: center;
+    width: 100%;
+}
+
+.inner-nav {
+    background: #000000;
+    border-right: 3px solid #FFFFFF;
+    min-height: inherit;
+    width: 20%;
+}
+
+.inner-nav ul {
+    list-style: none; 
+    margin: 0; 
+    padding: 0;
+}
+
+.inner-nav ul li {
+    width: 100%;
+}
+
+.inner-nav a {
+    color: #FFFFFF; 
+    letter-spacing: 3px; 
+    display: block;
+    padding: 35px;
+    text-decoration: none;
+    width: 100%;
+}
+
+.inner-nav a:hover {
+    color: #000000;
+    background: white;
+}
+
+.inner-content {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    min-height: inherit;
+    padding: 50px;
+    width: 80%;
+}
+
+.footer {
+    align-items: center;
+    border-top: 3px solid #FFFFFF;
+    background: #808080;
+    color: #FFFFFF;
+    display: flex;
+    font-size: 150%;
+    justify-content: center;
+}
+
+input[type="text"], input[type="number"], input[type="email"] {
+    border: none;
+    border-radius: 15px;
+    margin: 50px 0;
+    width: 100%;
+    padding: 15px;
+    text-align: center;
+}
+
+button {
+    border: none;
+    border-radius: 15px;
+    background: #000000;
+    color: #FFFFFF;
+    margin-bottom: 30px;
+    padding: 15px;
+}
+
+button:hover {
+    background: #da3243;
+    cursor: pointer; 
+}
+
+
+.request-response {
+    font-weight: bold;
+}
+
+.line-height-big {
+    line-height: 200%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.w-100 {
+    width: 100%;
+}

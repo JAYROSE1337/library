@@ -1,0 +1,25 @@
+=== BOOKS ===
+
+int bookId
+String title
+
+=== BOOKCOPIES ===
+
+int bookCopyId
+int isbn
+Book book
+
+=== BORROWS ===
+
+int borrowId
+String dateOfBorrow
+User user
+BookCopy bookCopy
+
+=== USERS ===
+
+int userId
+String firstName
+String surname
+String email
+String password

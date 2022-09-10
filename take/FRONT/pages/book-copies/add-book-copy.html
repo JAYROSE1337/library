@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Katarzyna Sęk, Karol Wyligała, Krzysztof Mazur, Karol Fugler">
+        <meta charset="UTF-8">
+        <title>TAKE project</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;700&display=swap">
+        <link rel="stylesheet" href="../../styles/style.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <ul>
+                    <li>
+                        <a href="../index.html">Homepage</a>
+                    </li>
+                    <li>
+                        <a href="../books/books.html">Books</a>
+                    </li>
+                    <li>
+                        <a href="book-copies.html">BookCopies</a>
+                    </li>
+                    <li>
+                        <a href="../borrows/borrows.html">Borrows</a>
+                    </li>
+                    <li>
+                        <a href="../users/users.html">Users</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="content">
+                <div class="inner-nav">
+                    <ul>
+                        <li>
+                            <a href="add-book-copy.html">Add book copy</a>
+                        <li>
+                            <a href="get-book-copy.html">Get book copy (copies)</a>
+                        </li>
+                        <li>
+                            <a href="update-book-copy.html">Update book copy</a>
+                        </li>
+                        <li>
+                            <a href="delete-book-copy.html">Delete book copy</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="inner-content">
+                    <div class="w-100">
+                        <input type="number" placeholder="Enter book isbn" id="bookIsbn" minlength="13" maxlength="13">
+                        <input type="number" placeholder="Enter book id to assign" id="bookId" minlength="1" maxlength="128">
+                        <button type="button" onclick="addBookCopy()">Add book copy</button>
+
+                        <div id="requestResponseBookCopy" class="request-response text-center"></div>
+                    </div>
+                    <div class="w-100">
+                        Available books: 
+                        <div id="requestResponse" class="request-response text-center"></div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="footer">
+                <p>
+                    Website was created by Katarzyna Sęk, Karol Wyligała, Krzysztof Mazur, Karol Fugler &copy; 2022
+                </p>
+            </div>
+        </div>
+
+        <script src="../../scripts/script.js"></script>
+        <script>getAllBooks()</script>
+    </body>
+</html>
