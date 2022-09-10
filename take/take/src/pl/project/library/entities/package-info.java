@@ -1,5 +1,5 @@
 /**
- * Package contains all class entites related to library system
- * @author Katarzyna Sek | Krzysztof Mazur | Karol Wyligala | Karol Fugler
+ * Library entities.
+ * @author Jakub Porębski, Maciej Jaros
  */
 package pl.project.library.entities;

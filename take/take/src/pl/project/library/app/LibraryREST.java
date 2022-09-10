@@ -13,14 +13,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 
-import pl.kurs.komis.Cars;
 import pl.project.library.entities.Book;
 import pl.project.library.entities.BookCopies;
 import pl.project.library.entities.BookCopy;
 import pl.project.library.entities.Books;
 import pl.project.library.entities.Borrow;
 import pl.project.library.entities.Borrows;
-import pl.project.library.entities.User;
 import pl.project.library.entities.Users;
 
 @Path("/library")

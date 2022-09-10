@@ -3,45 +3,41 @@ package pl.project.library.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.CascadeType;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
-@Entity(name="BOOKS")
-@Table(name="BOOKS")
-@XmlRootElement
+@Entity
+@Table(name=Book.TABLENAME)
 public class Book implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
-
+	static final String TABLENAME = "BOOKS";
+	private static final long serialVersionUID = -2449297703711368024L;
 	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
-	private int bookId;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private UUID bookID;
 	
-	@Column(length=128, nullable=false, unique=false)
+	@Column(nullable=false)
 	private String title;
 	
-	@OneToMany(mappedBy = "book", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private List<BookCopy> bookCopies = new ArrayList<BookCopy>();
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "AUTHORS_authorID", referencedColumnName = "authorID")
+	private Author author;
 	
-	public int getBookId() {
-		return this.bookId;
+	@OneToMany(mappedBy="book", fetch = FetchType.EAGER)
+	private List<BookCopy> copies = new ArrayList<BookCopy>();
+	
+	public UUID getBookId() {
+		return this.bookID;
 	}
-	
-	public void setBookId(int id) {
-		this.bookId = id;
-	}
-	
+
 	public String getTitle() {
 		return this.title;
 	}
@@ -50,11 +46,11 @@ public class Book implements Serializable{
 		this.title = title;
 	}
 	
-	public List<BookCopy> getBookCopies() {
-		return this.bookCopies;
+	public List<BookCopy> getCopies() {
+		return this.copies;
 	}
 	
-	public void setBookCopies(List<BookCopy> bookCopies) {
-		this.bookCopies = bookCopies;
+	public void setBookCopies(List<BookCopy> copies) {
+		this.copies = copies;
 	}
 }

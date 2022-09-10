@@ -9,7 +9,6 @@ import javax.persistence.Query;
 import pl.project.library.entities.Book;
 import pl.project.library.entities.BookCopy;
 import pl.project.library.entities.Borrow;
-import pl.project.library.entities.User;
 
 public class BaseDAO {
 	

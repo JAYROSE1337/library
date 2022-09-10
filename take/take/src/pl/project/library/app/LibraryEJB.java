@@ -3,17 +3,10 @@ package pl.project.library.app;
 import java.util.List;
 
 import javax.ejb.Stateful;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
-import pl.kurs.komis.Car;
 import pl.project.library.entities.Book;
 import pl.project.library.entities.BookCopy;
 import pl.project.library.entities.Borrow;
-import pl.project.library.entities.User;
 
 @Stateful
 public class LibraryEJB extends BaseDAO {
