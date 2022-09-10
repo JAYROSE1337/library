@@ -3,9 +3,6 @@ package pl.kurs.komis;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
 public class Cars {
 	private List<Car> cars = new ArrayList<Car>();
 

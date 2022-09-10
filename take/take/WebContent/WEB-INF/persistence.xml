@@ -4,10 +4,11 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
 	<persistence-unit name="library">
 		<jta-data-source>java:/DefaultDS</jta-data-source>
+		<class>pl.project.library.entities.Author</class>
 		<class>pl.project.library.entities.Book</class>
 		<class>pl.project.library.entities.BookCopy</class>
-		<class>pl.project.library.entities.Borrow</class>
-		<class>pl.project.library.entities.User</class>
+		<class>pl.project.library.entities.Lend</class>
+		<class>pl.project.library.entities.Reader</class>
 		
 
 		<properties>
