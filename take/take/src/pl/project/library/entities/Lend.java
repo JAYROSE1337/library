@@ -8,7 +8,7 @@ import java.util.UUID;
 @Entity
 @Table(name=Lend.TABLENAME)
 public class Lend implements Serializable{
-	static final String TABLENAME = "LENDS";
+	public static final String TABLENAME = "LENDS";
 	
 	@Id
 	@GeneratedValue(strategy= GenerationType.IDENTITY)

@@ -9,7 +9,7 @@ import java.util.UUID;
 @Entity
 @Table(name = Reader.TABLENAME)
 public class Reader implements Serializable {
-    final static String TABLENAME = "READERS";
+    public final static String TABLENAME = "READERS";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

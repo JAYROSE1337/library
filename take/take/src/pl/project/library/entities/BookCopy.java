@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name=BookCopy.TABLENAME)
 public class BookCopy implements Serializable {
 
-	static final String TABLENAME = "COPIES";
+	public static final String TABLENAME = "COPIES";
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)

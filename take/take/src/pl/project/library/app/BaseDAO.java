@@ -6,9 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import pl.project.library.entities.Book;
-import pl.project.library.entities.BookCopy;
-import pl.project.library.entities.Borrow;
+import pl.project.library.entities.*;
 
 public class BaseDAO {
 	
@@ -20,7 +18,7 @@ public class BaseDAO {
 	public <T> void create(T t) {
 		em.persist(t);
 	}
-	
+
 	public <T> T get(Object id, Class<T> type) {
 		return em.find(type, id);
 	}
@@ -35,9 +33,16 @@ public class BaseDAO {
 	}
 	
 	// ================================= DEDICATED ================================= \\
-	
+	public List<Author> getAuthors() {
+		Query query = em.createQuery(String.format("select * from %s", Author.TABLENAME));
+		@SuppressWarnings("unchecked")
+		List<Author> authors = query.getResultList();
+
+		return authors;
+	}
+
 	public List<Book> getBooks() {
-		Query query = em.createQuery("select b from BOOKS b");
+		Query query = em.createQuery(String.format("select * from %s", Book.TABLENAME));
 		@SuppressWarnings("unchecked")
 		List<Book> books = query.getResultList();
 		
@@ -45,26 +50,26 @@ public class BaseDAO {
 	}
 	
 	public List<BookCopy> getBookCopies() {
-		Query query = em.createQuery("select bc from BOOKCOPIES bc");
+		Query query = em.createQuery(String.format("select * from %s", BookCopy.TABLENAME));
 		@SuppressWarnings("unchecked")
-		List<BookCopy> books = query.getResultList();
+		List<BookCopy> copies = query.getResultList();
 		
-		return books;
+		return copies;
 	}
 	
-	public List<User> getUsers() {
-		Query query = em.createQuery("select u from USERS u");
+	public List<Lend> getLends() {
+		Query query = em.createQuery(String.format("select * from %s", Lend.TABLENAME));
 		@SuppressWarnings("unchecked")
-		List<User> users = query.getResultList();
+		List<Lend> lends = query.getResultList();
 		
-		return users;
+		return lends;
 	}
 	
-	public List<Borrow> getBorrows() {
-		Query query = em.createQuery("select b from BORROWS b");
+	public List<Reader> getReaders() {
+		Query query = em.createQuery(String.format("select * from %s", Reader.TABLENAME));
 		@SuppressWarnings("unchecked")
-		List<Borrow> borrows = query.getResultList();
+		List<Reader> readers = query.getResultList();
 		
-		return borrows;
+		return readers;
 	}
 }

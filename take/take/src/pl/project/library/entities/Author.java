@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Entity
 @Table(name= Author.TABLENAME)
 public class Author implements Serializable {
-	static final String TABLENAME = "AUTHORS";
+	public static final String TABLENAME = "AUTHORS";
 	private static final long serialVersionUID = -2449297703711368024L;
 	
 	@Id

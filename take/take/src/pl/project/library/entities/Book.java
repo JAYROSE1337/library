@@ -18,7 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name=Book.TABLENAME)
 public class Book implements Serializable{
-	static final String TABLENAME = "BOOKS";
+	public static final String TABLENAME = "BOOKS";
 	private static final long serialVersionUID = -2449297703711368024L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

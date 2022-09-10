@@ -1,142 +1,130 @@
 package pl.project.library.app;
 
 import java.util.List;
+import java.util.UUID;
 
 import javax.ejb.Stateful;
 
-import pl.project.library.entities.Book;
-import pl.project.library.entities.BookCopy;
-import pl.project.library.entities.Borrow;
+import pl.project.library.entities.*;
 
 @Stateful
 public class LibraryEJB extends BaseDAO {
-    
-	// ================================= BOOKS ================================= \\
-	
-    public Book getBook(int bookId) {
-        Book book = get(bookId, Book.class);
-        
-        return book;
-    }
 
-	public boolean addBook(Book book) {
-	    create(book);
+	// --------- Authors ------------
 
-        return true;
+	public Author getAuthor(UUID readerID) {
+		return get(readerID, Author.class);
 	}
-	
-	public boolean updateBook(Book book) {
-	    update(book);
 
-        return true;
+	public void addAuthor(Author reader) {
+		create(reader);
 	}
-	
-	public void deleteBook(int bookId) {
-		Book book = getBook(bookId);
-		
+
+	public void updateAuthor(Author reader) {
+		update(reader);
+	}
+
+	public void deleteAuthor(UUID readerID) {
+		Author reader = getAuthor(readerID);
+		delete(reader);
+	}
+
+	public List<Author> getAllAuthors() {
+		return getAuthors();
+	}
+
+	// --------- Books ------------
+
+	public Book getBook(UUID bookID) {
+		return get(bookID, Book.class);
+	}
+
+	public void addBook(Book book) {
+		create(book);
+	}
+
+	public void updateBook(Book book) {
+		update(book);
+	}
+
+	public void deleteBook(UUID bookID) {
+		Book book = getBook(bookID);
 		delete(book);
 	}
-	
-    public List<Book> getAllBooks() {
-		List<Book> books = getBooks();
-    	
-    	return books;
-    }
-    
-	// ================================= BOOK COPIES ================================= \\
-    
-	public boolean addBookCopy(BookCopy bookCopy) {
-	    create(bookCopy);
 
-        return true;
+	public List<Book> getAllBooks() {
+		return getBooks();
 	}
-	
-    public BookCopy getBookCopy(int bookCopyId) {
-        BookCopy book = get(bookCopyId, BookCopy.class);
-        
-        return book;
-    }
-    
-    public List<BookCopy> getAllBookCopies() {
-		List<BookCopy> bookCopies = getBookCopies();
-    	
-    	return bookCopies;
-    }
-    
-	public boolean updateBookCopy(BookCopy bookCopy) {
-	    update(bookCopy);
 
-        return true;
-	}
-    
-	public void deleteBookCopy(int bookCopyId) {
-		BookCopy bookCopy = getBookCopy(bookCopyId);
-		
-		delete(bookCopy);
-	}
-	
-	// ================================= USERS ================================= \\
-	
-    public User getUser(int userId) {
-        User user = get(userId, User.class);
-        
-        return user;
-    }
+	// --------- BookCopies ------------
 
-	public boolean addUser(User user) {
-	    create(user);
+	public BookCopy getBookCopy(UUID copyID) {
+		return get(copyID, BookCopy.class);
+	}
 
-        return true;
+	public void addBookCopy(BookCopy copy) {
+		create(copy);
 	}
-	
-	public boolean updateUser(User user) {
-	    update(user);
 
-        return true;
+	public void updateBookCopy(BookCopy copy) {
+		update(copy);
 	}
-	
-	public void deleteUser(int userId) {
-		User user = getUser(userId);
-		
-		delete(user);
-	}
-	
-    public List<User> getAllUsers() {
-		List<User> users = getUsers();
-    	
-    	return users;
-    }
-    
-	// ================================= BORROWS ================================= \\
-    
-    public Borrow getBorrow(int borrowId) {
-        Borrow borrow = get(borrowId, Borrow.class);
-        
-        return borrow;
-    }
 
-	public boolean addBorrow(Borrow borrow) {
-	    create(borrow);
+	public void deleteBookCopy(UUID copyID) {
+		BookCopy copy = getBookCopy(copyID);
+		delete(copy);
+	}
 
-        return true;
+	public List<BookCopy> getAllBookCopies() {
+		return getBookCopies();
 	}
-	
-	public boolean updateBorrow(Borrow borrow) {
-	    update(borrow);
 
-        return true;
+	// --------- Lends ------------
+
+	public Lend getLend(UUID lendID) {
+		Lend lend = get(lendID, Lend.class);
+
+		return lend;
 	}
-	
-	public void deleteBorrow(int borrowId) {
-		Borrow borrow = getBorrow(borrowId);
-		
-		delete(borrow);
+
+	public void addLend(Lend lend) {
+		create(lend);
 	}
-	
-    public List<Borrow> getAllBorrows() {
-		List<Borrow> borrows = getBorrows();
-    	
-    	return borrows;
-    }
+
+	public void updateLend(Lend lend) {
+		update(lend);
+	}
+
+	public void deleteLend(UUID lendID) {
+		Lend lend = getLend(lendID);
+	}
+
+	public List<Lend> getAllLends() {
+		return getLends();
+	}
+
+	// --------- Readers ------------
+
+	public Reader getReader(UUID readerID) {
+		Reader reader = get(readerID, Reader.class);
+
+		return reader;
+	}
+
+	public void addReader(Reader reader) {
+		create(reader);
+	}
+
+	public void updateReader(Reader reader) {
+		update(reader);
+	}
+
+	public void deleteReader(UUID readerID) {
+		Reader reader = getReader(readerID);
+	}
+
+	public List<Reader> getAllReaders() {
+		return getReaders();
+	}
 
 }
