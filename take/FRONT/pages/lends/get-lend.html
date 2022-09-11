@@ -37,9 +37,9 @@
                 <div class="inner-nav">
                     <ul>
                         <li>
-                            <a href="add-lend.html">Borrow book</a>
+                            <a href="add-lend.html">Lend a book</a>
                         <li>
-                            <a href="get-lend.html">Get borrow(s)</a>
+                            <a href="get-lend.html">Get lend(s)</a>
                         </li>
                         <li>
                             <a href="update-lend.html">Update lend</a>
@@ -51,11 +51,11 @@
                 </div>
                 <div class="inner-content">
                     <div>
-                        <input type="number" placeholder="Enter borrow id" id="borrowId" minlength="1" maxlength="128">
-                        <button type="button" onclick="getBorrow()">Get borrow</button>
-                        <button type="button" onclick="getAllBorrows()">Get borrows</button>
+                        <input type="number" placeholder="Enter lend ID" id="lendID" minlength="1">
+                        <button type="button" onclick="getLend()">Get lend</button>
+                        <button type="button" onclick="getAllLendss()">Get lends</button>
 
-                        <div id="requestResponseBorrow" class="request-response text-center"></div>
+                        <div id="requestResponseLend" class="request-response text-center"></div>
                     </div>
                 </div>
             </div>
@@ -64,6 +64,3 @@
         <script src="../../scripts/script.js"></script>
     </body>
 </html>
-
-$ git config --global user.name "Jakub Porebski"
-$ git config --global user.email kuba.porebski3@gmail.com

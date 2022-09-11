@@ -37,9 +37,9 @@
                 <div class="inner-nav">
                     <ul>
                         <li>
-                            <a href="add-lend.html">Borrow book</a>
+                            <a href="add-lend.html">Lend book</a>
                         <li>
-                            <a href="get-lend.html">Get borrow(s)</a>
+                            <a href="get-lend.html">Get lend(s)</a>
                         </li>
                         <li>
                             <a href="update-lend.html">Update lend</a>
@@ -51,10 +51,10 @@
                 </div>
                 <div class="inner-content">
                     <div class="w-100">
-                        <input type="number" placeholder="Enter borrow id to delete" id="borrowId" minlength="1" maxlength="128">
-                        <button type="button" onclick="deleteBorrow()">Delete borrow</button>
+                        <input type="text" placeholder="Enter lend ID" id="lendID" minlength="1">
+                        <button type="button" onclick="deleteLend()">Delete lend</button>
 
-                        <div id="requestResponseBorrow" class="request-response text-center"></div>
+                        <div id="requestResponseLend" class="request-response text-center"></div>
                     </div>
                 </div>
             </div>
