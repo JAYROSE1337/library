@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+        <title>TAKE project</title>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;700&display=swap">
+        <link rel="stylesheet" href="../../styles/style.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <ul>
+                    <li>
+                        <a href="../index.html">Homepage</a>
+                    </li>
+                    <li>
+                        <a href="authors.html">Authors</a>
+                    </li>
+                    <li>
+                        <a href="../books/books.html">Books</a>
+                    </li>
+                    <li>
+                        <a href="../book-copies/book-copies.html">BookCopies</a>
+                    </li>
+                    <li>
+                        <a href="../lends/lends.html">Lends</a>
+                    </li>
+                    <li>
+                        <a href="../users/users.html">Readers</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="content">
+                <div class="inner-nav">
+                    <ul>
+                        <li>
+                            <a href="add-author.html">Add author</a>
+                        <li>
+                            <a href="get-author.html">Get authors</a>
+                        </li>
+                        <li>
+                            <a href="update-author.html">Update author</a>
+                        </li>
+                        <li>
+                            <a href="delete-author.html">Delete author</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="inner-content">
+                    <div>
+                        <input type="text" placeholder="First name" id="firstName" minlength="3" >
+                        <input type="text" placeholder="Last name" id="lastName" minlength="3" >
+                        <button type="button" onclick="addAuthor()">Add new author</button>
+
+                        <div id="requestResponse" class="request-response text-center"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="../../scripts/script.js"></script>
+    </body>
+</html>
