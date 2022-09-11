@@ -26,7 +26,7 @@
                         <a href="../book-copies/book-copies.html">BookCopies</a>
                     </li>
                     <li>
-                        <a href="lends.html">Lends</a>
+                        <a href="borrows.html">Lends</a>
                     </li>
                     <li>
                         <a href="../readers/readers.html">Readers</a>
@@ -37,24 +37,24 @@
                 <div class="inner-nav">
                     <ul>
                         <li>
-                            <a href="add-lend.html">Borrow book</a>
+                            <a href="add-borrow.html">Lend book</a>
                         <li>
-                            <a href="get-lend.html">Get borrow(s)</a>
+                            <a href="get-borrow.html">Get lend(s)</a>
                         </li>
                         <li>
-                            <a href="update-lend.html">Update lend</a>
+                            <a href="update-borrow.html">Update lend</a>
                         </li>
                         <li>
-                            <a href="delete-lend.html">Delete lend</a>
+                            <a href="delete-borrow.html">Delete lend</a>
                         </li>
                     </ul>
                 </div>
                 <div class="inner-content">
                     <div class="w-100">
-                        <input type="number" placeholder="Enter book copy id to lend" id="bookCopyId" minlength="1">
-                        <input type="number" placeholder="Enter user id to assign lend" id="userId" minlength="1">
-                        <input type="text" placeholder="Enter borrow date" id="borrowDate">
-                        <button type="button" onclick="addLend()">Lend a book</button>
+                        <input type="text" placeholder="Enter book copy id to lend" id="bookCopyId" minlength="1">
+                        <input type="text" placeholder="Enter user id to assign lend" id="userId" minlength="1>
+                        <input type="text" placeholder="Enter lend date" id="borrowDate">
+                        <button type="button" onclick="addBorrow()">Lend a book</button>
 
                         <div id="requestResponseBorrow" class="request-response text-center"></div>
                     </div>
