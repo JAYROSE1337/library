@@ -1,5 +1,5 @@
 /**
  * Library entities.
- * @author Jakub Porębski, Maciej Jaros
+ * @author Jakub Porebski, Maciej Jaros
  */
 package pl.project.library.entities;
