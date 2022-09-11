@@ -533,11 +533,11 @@ getAllLends = () => {
             }
 
             if (Array.isArray(lends.lends.lends) == false) {
-                document.getElementById("requestResponseLend").innerHTML = lends.lends.lends.lendId["#text"] + " => " + lends.lends.lends.lendDate["#text"] + "<br>";
+                document.getElementById("requestResponseLend").innerHTML = lends.lends.lends.lendId["#text"] + " => " + lends.lends.lends.lendDate["#text"] + "<br>" + lends.lends.lends.returnDate["#text"];
             }
             else {
                 lends.lends.lends.forEach((lend) => {
-                    document.getElementById("requestResponseLend").innerHTML += lend.lendId["#text"] + " => " + lend.lendDate["#text"] + "<br>";
+                    document.getElementById("requestResponseLend").innerHTML += lend.lendId["#text"] + " => " + lend.lendDate["#text"] + "<br>" + lends.lends.lends.returnDate["#text"];
                 });
             }
         }
