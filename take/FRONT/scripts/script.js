@@ -466,7 +466,7 @@ updateBookCopy = () => {
 
 addLend = () => {
     var readerID = Number(document.getElementById("readerID").value);
-    var bookCopyId = Number(document.getElementById("bookCopyId").value);
+    var bookCopyId = Number(document.getElementById("bookCopyID").value);
     var lendDate = document.getElementById("lendDate").value;
 
     if (readerID == 0) {
@@ -513,8 +513,10 @@ getLend = () => {
                 return;
             }
 
-            var lend = parseXml(request.responseText);
-            document.getElementById("requestResponseLend").innerHTML = lend.lend.lendId["#text"] + " => " + lend.lend.lendDate["#text"] + '<br>' + lend.lend.returnDate['#text'];
+            var lend = parseXml(request.responseText).lend;
+            const bookCopy = lend.borrowedCopy;
+            const reader = lend.reader;
+            document.getElementById("requestResponseLend").innerHTML = lend.lendID["#text"] + " => Reader: " + reader.firstName['#text'] + ' ' + reader.lastName['#text'] + ' => Book: ' + bookCopy.book.title["#text"] + ' COPYID: ' + bookCopy.bookCopyID['#text'] + "<br>";
         }
     }
     
@@ -524,26 +526,31 @@ getLend = () => {
 
 getAllLends = () => {
     var request = new XMLHttpRequest();
-    var url = "http://localhost:8080/take/library/getLends";
+    var url = "http://localhost:8080/take/library/lends";
 
     request.onreadystatechange = () => {
         if (request.readyState == 4) {
 
             var lends = parseXml(request.responseText);
-            console.log(lends);
+            const collection = lends?.collection?.lend
 
             document.getElementById("requestResponseLend").innerHTML = "";
-            if (lends.lends.lends == undefined || lends.lends.lends.length == 0) {
+            if (collection == undefined || collection.length == 0) {
                 document.getElementById("requestResponseLend").innerHTML = "Lends table is empty!";
                 return;
             }
 
-            if (Array.isArray(lends.lends.lends) == false) {
-                document.getElementById("requestResponseLend").innerHTML = lends.lends.lends.lendId["#text"] + " => " + lends.lends.lends.lendDate["#text"] + "<br>" + lends.lends.lends.returnDate["#text"];
+            if (Array.isArray(collection) == false) {
+                const bookCopy = collection.borrowedCopy;
+                const reader = collection.reader;
+                document.getElementById("requestResponseLend").innerHTML = collection.lendID["#text"] + " => Reader: " + reader.firstName['#text'] + ' ' + reader.lastName['#text'] + ' => Book: ' + bookCopy.book.title["#text"] + ' COPYID: ' + bookCopy.copyID['#text'] + "<br>";
             }
             else {
-                lends.lends.lends.forEach((lend) => {
-                    document.getElementById("requestResponseLend").innerHTML += lend.lendId["#text"] + " => " + lend.lendDate["#text"] + "<br>" + lends.lends.lends.returnDate["#text"];
+                document.getElementById("requestResponseLend").innerHTML = "";
+                collection.forEach((lend) => {
+                    const bookCopy = lend.borrowedCopy;
+                    const reader = lend.reader;
+                    document.getElementById("requestResponseLend").innerHTML += lend.lendID["#text"] + " => Reader: " + reader.firstName['#text'] + ' ' + reader.lastName['#text'] + ' => Book: ' + bookCopy.book.title["#text"] + ' COPYID: ' + bookCopy.bookCopyID['#text'] + "<br>";
                 });
             }
         }
@@ -554,15 +561,15 @@ getAllLends = () => {
 }
 
 deleteLend = () => {
-    var lendID = Number(document.getElementById("lendId").value);
+    var lendID = Number(document.getElementById("lendID").value);
 
-    if (lendId == 0) {
+    if (lendID == 0) {
         document.getElementById("requestResponseLend").innerHTML = "Field cannot be empty and its value has to be different from 0!";
         return;
     }
 
     var request = new XMLHttpRequest();
-    var url = "http://localhost:8080/take/library/deleteLend/" + lendId;
+    var url = "http://localhost:8080/take/library/lends/" + lendID;
 
     request.onreadystatechange = () => {
         if (request.status == 0) {
@@ -577,19 +584,19 @@ deleteLend = () => {
 }
 
 updateLend = () => {
-    var lendID = Number(document.getElementById("lendId").value);
+    var lendID = Number(document.getElementById("lendID").value);
     var lendDate = document.getElementById("startLendDate").value;
     var returnDate = document.getElementById("endLendDate").value;
 
-    if (lendId == 0) {
+    if (lendID == 0) {
         document.getElementById("requestResponseLend").innerHTML = "Field cannot be empty and its value has to be different from 0!";
         return;
     }
 
     var request = new XMLHttpRequest();
-    var params = '<?xml version="1.0"?><lend><lendId>' + lendId + '</lendId><lendDate>' + lendDate +'</lendDate><returnDate>'+ returnDate + '</returnDate></lend>';
+    var params = '<?xml version="1.0"?><lend><lendId>' + lendID + '</lendId><lendDate>' + lendDate +'</lendDate><returnDate>'+ returnDate + '</returnDate></lend>';
 
-    request.open('PUT', 'http://localhost:8080/take/library/updateLend', true);
+    request.open('PUT', 'http://localhost:8080/take/library/lends', true);
     request.setRequestHeader('Content-type', 'application/xml');
 
     request.onreadystatechange = () => {

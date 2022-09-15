@@ -2,6 +2,7 @@ package pl.project.library.entities;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -27,12 +28,14 @@ public class Lend implements Serializable{
     @Temporal(TemporalType.DATE)
     private Date returnDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "BOOKCOPIES_copyID", referencedColumnName = "copyID")
+    @XmlTransient
     private BookCopy copy;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "READERS_readerID", referencedColumnName = "readerID")
+    @XmlTransient
     private Reader reader;
 
     public void setLendID(int id) {

@@ -29,9 +29,6 @@ public class Reader implements Serializable {
 
     @Column(nullable = false, unique = true)
     private String personalID;
-
-    @OneToMany(mappedBy = "reader", fetch = FetchType.EAGER)
-    private List<Lend> lends = new ArrayList<Lend>();
     
     public void setReaderID(int id) {
     	this.readerID = id;
@@ -60,12 +57,5 @@ public class Reader implements Serializable {
     }
     public void setPersonalID(String personalID) {
         this.personalID = personalID;
-    }
-
-    public List<Lend> getLends() {
-        return lends;
-    }
-    public void setLends(List<Lend> lends) {
-        this.lends = lends;
     }
 }
