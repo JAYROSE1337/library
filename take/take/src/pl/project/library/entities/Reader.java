@@ -30,8 +30,8 @@ public class Reader implements Serializable {
     @Column(nullable = false, unique = true)
     private String personalID;
 
-    @OneToMany(mappedBy = "reader", fetch = FetchType.LAZY)
-    private List<Lend> lends = new ArrayList<>();
+    @OneToMany(mappedBy = "reader", fetch = FetchType.EAGER)
+    private List<Lend> lends = new ArrayList<Lend>();
     
     public void setReaderID(int id) {
     	this.readerID = id;

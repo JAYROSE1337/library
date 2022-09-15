@@ -431,6 +431,7 @@ deleteBookCopy = () => {
     request.send();
 }
 
+//CREATES NEW INSTANCE (?)
 updateBookCopy = () => {
 
     var bookCopyId = Number(document.getElementById("bookCopyId").value);
@@ -608,7 +609,6 @@ updateLend = () => {
 // ================================= USERS ================================= \\
 
 addUser = () => {
-    var readerID = Number(document.getElementById('readerID').value);
     var firstName = document.getElementById("firstName").value;
     var lastName = document.getElementById("lastName").value;
     var personalID = document.getElementById("personalID").value;
@@ -621,7 +621,7 @@ addUser = () => {
     }
 
     var request = new XMLHttpRequest();
-    var params = '<?xml version="1.0"?><reader><readerID>'+readerID+'</readerID><firstName>' + firstName +'</firstName><lastName>' + lastName + '</lastName><personalID>' + personalID + '</personalID></reader>';
+    var params = '<?xml version="1.0"?><reader><firstName>' + firstName +'</firstName><lastName>' + lastName + '</lastName><personalID>' + personalID + '</personalID></reader>';
 
     request.open('POST', 'http://localhost:8080/take/library/readers', true);
     request.setRequestHeader('Content-type', 'application/xml');
@@ -657,8 +657,8 @@ getUser = () => {
 
             var reader = parseXml(request.responseText);
             document.getElementById("requestResponseUser").innerHTML = reader.reader.readerID["#text"] + " => " +
-                                                         reader.reader.firstName["#text"] + " => " +
-                                                         reader.reader.lastName["#text"] + " => " +
+                                                         reader.reader.firstName["#text"] + " " +
+                                                         reader.reader.lastName["#text"] + " => PESEL: " +
                                                          reader.reader.personalID["#text"];
         }
     }
@@ -674,25 +674,25 @@ getAllUsers = () => {
     request.onreadystatechange = () => {
         if (request.readyState == 4) {
 
-            var users = parseXml(request.responseText);
-
+            var readers = parseXml(request.responseText);
+            const collection = readers?.collection?.reader;
             document.getElementById("requestResponseUser").innerHTML = "";
-            if (users.users.users == undefined || users.users.users.length == 0) {
+            if (collection == undefined || collection.length == 0) {
                 document.getElementById("requestResponseUser").innerHTML = "Users table is empty!";
                 return;
             }
 
-            if (Array.isArray(users.users.users) == false) {
-                document.getElementById("requestResponseUser").innerHTML = users.users.users.readerID["#text"] + " => " +
-                                                                            users.users.users.firstName["#text"] + " => " +
-                                                                            users.users.users.lastName["#text"] + " => " +
-                                                                            users.users.users.personalID["#text"];
+            if (Array.isArray(collection) == false) {
+                document.getElementById("requestResponseUser").innerHTML = collection.readerID["#text"] + " => " +
+                                                                            collection.firstName["#text"] + " " +
+                                                                            collection.lastName["#text"] + " => PESEL: " +
+                                                                            collection.personalID["#text"];
             }
             else {
-                users.users.users.forEach((el) => {
+                collection.forEach((el) => {
                     document.getElementById("requestResponseUser").innerHTML += el.readerID["#text"] + " => " +
-                                                                                el.firstName["#text"] + " => " +
-                                                                                el.lastName["#text"] + " => " +
+                                                                                el.firstName["#text"] + " " +
+                                                                                el.lastName["#text"] + " => PESEL: " +
                                                                                 el.personalID["#text"] + "<br>";
                 });
             }

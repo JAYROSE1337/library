@@ -25,7 +25,7 @@ public class BookCopy implements Serializable {
 	@JoinColumn(name = "BOOKS_bookID", referencedColumnName = "bookID")
 	private Book book;
 
-	@OneToMany(fetch = FetchType.LAZY)
+	@OneToMany(fetch = FetchType.EAGER)
 	private List<Lend> lends = new ArrayList<>();
 	
 	public void setBookCopyID(int id) {
