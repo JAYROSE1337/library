@@ -1,18 +1,23 @@
 package pl.project.library.entities;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import java.io.Serializable;
 import java.util.Date;
-import java.util.UUID;
 
-@Entity
+@Entity(name = Lend.TABLENAME)
 @Table(name=Lend.TABLENAME)
+@XmlRootElement
 public class Lend implements Serializable{
+
+	private static final long serialVersionUID = 9211071050967433288L;
+
 	public static final String TABLENAME = "LENDS";
 	
 	@Id
-	@GeneratedValue(strategy= GenerationType.IDENTITY)
-	private UUID lendID;
+	@GeneratedValue(strategy= GenerationType.TABLE)
+	private int lendID;
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
@@ -30,7 +35,10 @@ public class Lend implements Serializable{
     @JoinColumn(name = "READERS_readerID", referencedColumnName = "readerID")
     private Reader reader;
 
-    public UUID getLendID() { return this.lendID; }
+    public void setLendID(int id) {
+    	this.lendID = id;
+    }
+    public int getLendID() { return this.lendID; }
 
     public Date getLendDate() {return this.lendDate;}
     public void setLendDate(Date lendDate) {this.lendDate = lendDate;}
@@ -40,8 +48,11 @@ public class Lend implements Serializable{
 
     public BookCopy getBorrowedCopy() {return this.copy;}
     public void setBorrowedCopy(BookCopy copy) {this.copy = copy;}
-
+    
     public Reader getReader() {return this.reader;}
+    public void setReader(Reader reader) {
+    	this.reader = reader;
+    }
 
 
 }

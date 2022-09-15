@@ -42,6 +42,7 @@ parseXml = (xml, arrayTags) => {
 // ================================= AUTHORS ================================= \\
 
 addAuthor = () => {
+    const ID = Number(document.getElementById("id").value);
     const firstName = document.getElementById("firstName").value;
     const lastName = document.getElementById("lastName").value
 
@@ -51,7 +52,7 @@ addAuthor = () => {
     }
 
     var request = new XMLHttpRequest();
-    const params = '<?xml version="1.0"?><author><firstName>' + firstName +'</firstName><lastName>' + lastName + '</lastName></author>';
+    const params = '<?xml version="1.0"?><author><authorID>'+ id + '</authorID><firstName>' + firstName +'</firstName><lastName>' + lastName + '</lastName></author>';
 
     request.open('POST', 'http://localhost:8080/take/library/authors', true);
     request.setRequestHeader('Content-type', 'application/xml');
@@ -68,7 +69,7 @@ addAuthor = () => {
 }
 
 getAuthor = () => {
-    const authorID = document.getElementById("authorID").value;
+    const authorID = Number(document.getElementById("authorID").value);
 
     if (authorID == 0) {
         document.getElementById("requestResponse").innerHTML = "Field cannot be empty!";
@@ -103,17 +104,20 @@ getAllAuthors = () => {
             const authors = parseXml(request.responseText);
 
             document.getElementById("requestResponse").innerHTML = "";
-            if (authors?.authors?.authors?.length == 0) {
+            const collection = authors?.collection?.author;
+
+            if (collection.length == 0) {
                 document.getElementById("requestResponse").innerHTML = "Authors table is empty!";
                 return;
             }
 
-            if (Array.isArray(authors.authors.authors) == false) {
-                document.getElementById("requestResponse").innerHTML = authors.authors.authors.authorId["#text"] + " => " + authors.authors.authors.title["#text"] + "<br>";
+            if (Array.isArray(collection) == false) {
+                document.getElementById("requestResponse").innerHTML = collection.authorID["#text"] + " => " + collection.firstName["#text"] + ' ' + collection.lastName["#text"] + "<br>";
             }
             else {
-                authors.authors.authors.forEach((el) => {
-                    document.getElementById("requestResponse").innerHTML += el.authorId["#text"] + " => " + el.title["#text"] + "<br>";
+                collection.forEach((el) => {
+                    document.getElementById("requestResponse").insertAdjacentHTML("afterEnd", "<h2>"+ el.authorID['#text'] +" "+el.firstName['#text'] + ' ' + el.lastName['#text'] + '<br><span>Book title: </span>' +el.books?.title['#text'] +"</h2>");
+                    
                 });
             }
         }
@@ -124,7 +128,7 @@ getAllAuthors = () => {
 }
 
 deleteAuthor = () => {
-    const authorID = document.getElementById("authorID").value;
+    const authorID = Number(document.getElementById("authorID").value);
 
     if (authorID == 0) {
         document.getElementById("requestResponse").innerHTML = "Field cannot be empty and its value has to be different from 0!";
@@ -132,7 +136,7 @@ deleteAuthor = () => {
     }
 
     var request = new XMLHttpRequest();
-    var url = "http://localhost:8080/take/library/" + authorID;
+    var url = "http://localhost:8080/take/library/authors/" + authorID;
 
     request.onreadystatechange = () => {
         if (request.status == 0) {
@@ -147,9 +151,9 @@ deleteAuthor = () => {
 }
 
 updateAuthor = () => {
-    const firstName = document.getElementById("firstName").value;
-    const lastName = document.getElementById("lastName").value;
-    const authorID = document.getElementById("authorID").value;
+    const firstName = document.getElementById("authorFirstName").value;
+    const lastName = document.getElementById("authorLastName").value;
+    const authorID = Number(document.getElementById("authorID").value);
 
     if (firstName.length < 3 || lastName.length < 3) {
         document.getElementById("requestResponse").innerHTML = "Variables must contains at least 3 characters!";
@@ -185,7 +189,9 @@ updateAuthor = () => {
 // ================================= BOOKS ================================= \\
 
 addBook = () => {
-    var bookTitle = document.getElementById("bookTitle").value;
+    const bookID = Number(document.getElementById('bookID').value);
+    const bookTitle = document.getElementById("bookTitle").value;
+    const authorID = Number(document.getElementById("authorID").value);
 
     if (bookTitle.length < 3 || bookTitle.length > 128) {
         document.getElementById("requestResponse").innerHTML = "Title must contains 3-128 characters!";
@@ -193,9 +199,9 @@ addBook = () => {
     }
 
     var request = new XMLHttpRequest();
-    var params = '<?xml version="1.0"?><book><title>' + bookTitle +'</title></book>';
+    var params = '<?xml version="1.0"?><book><bookID>' + bookID + '</bookID><title>' + bookTitle +'</title></book>';
 
-    request.open('POST', 'http://localhost:8080/take/library/books', true);
+    request.open('POST', 'http://localhost:8080/take/library/books?authorID=' + authorID, true);
     request.setRequestHeader('Content-type', 'application/xml');
 
     request.onreadystatechange = () => {
@@ -209,7 +215,7 @@ addBook = () => {
 }
 
 getBook = () => {
-    const bookID = document.getElementById("bookID").value;
+    const bookID = Number(document.getElementById("bookID").value);
 
     if (bookID == 0) {
         document.getElementById("requestResponse").innerHTML = "Field cannot be empty!";
@@ -244,17 +250,18 @@ getAllBooks = () => {
             var books = parseXml(request.responseText);
 
             document.getElementById("requestResponse").innerHTML = "";
-            if (books.books.books == undefined || books.books.books.length == 0) {
+            const collection = books?.collection?.book;
+            if (collection == undefined || collection.length == 0) {
                 document.getElementById("requestResponse").innerHTML = "Books table is empty!";
                 return;
             }
 
-            if (Array.isArray(books.books.books) == false) {
-                document.getElementById("requestResponse").innerHTML = books.books.books.bookID["#text"] + " => " + books.books.books.title["#text"] + "<br>";
+            if (Array.isArray(collection) == false) {
+                document.getElementById("requestResponse").innerHTML = collection.title["#text"] + "<br>";
             }
             else {
-                books.books.books.forEach((el) => {
-                    document.getElementById("requestResponse").innerHTML += el.bookID["#text"] + " => " + el.title["#text"] + "<br>";
+                collection.forEach((el) => {
+                    document.getElementById("requestResponse").innerHTML += " => " + el.title["#text"] + "<br>";
                 });
             }
         }
@@ -265,7 +272,7 @@ getAllBooks = () => {
 }
 
 deleteBook = () => {
-    const bookID = document.getElementById("bookID").value;
+    const bookID = Number(document.getElementById("bookID").value);
 
     if (bookID == 0) {
         document.getElementById("requestResponse").innerHTML = "Field cannot be empty and its value has to be different from 0!";
@@ -289,7 +296,7 @@ deleteBook = () => {
 
 updateBook = () => {
     var bookTitle = document.getElementById("bookTitle").value;
-    var bookID = document.getElementById("bookID").value;
+    var bookID = Number(document.getElementById("bookID").value);
 
     if (bookTitle.length < 3 || bookTitle.length > 128) {
         document.getElementById("requestResponse").innerHTML = "Title must contains 3-128 characters!";
@@ -323,7 +330,8 @@ updateBook = () => {
 // ================================= BOOK COPIES ================================= \\
 
 addBookCopy = () => {
-    var bookID = document.getElementById("bookID").value;
+    var copyID = Number(document.getElementById('copyID').value);
+    var bookID = Number(document.getElementById("bookID").value);
 
     if (bookID.length < 3) {
         document.getElementById("requestResponseBookCopy").innerHTML = "BookID must contain at least 3 characters!";
@@ -331,9 +339,9 @@ addBookCopy = () => {
     }
 
     var request = new XMLHttpRequest();
-    var params = '<?xml version="1.0"?><bookCopy><bookID>' + bookID +'</bookID></bookCopy>';
+    var params = '<?xml version="1.0"?><bookCopy><bookCopyId>'+copyID+'</bookCopyId></bookCopy>';
 
-    request.open('POST', 'http://localhost:8080/take/library/copies', true);
+    request.open('POST', 'http://localhost:8080/take/library/copies?bookID=' + bookID, true);
     request.setRequestHeader('Content-type', 'application/xml');
 
     request.onreadystatechange = () => {
@@ -347,7 +355,7 @@ addBookCopy = () => {
 }
 
 getBookCopy = () => {
-    var bookCopyId = document.getElementById("bookCopyId").value;
+    var bookCopyId = Number(document.getElementById("bookCopyId").value);
 
     if (bookCopyId == 0) {
         document.getElementById("requestResponseBookCopy").innerHTML = "Field cannot be empty!";
@@ -380,20 +388,20 @@ getAllBookCopies = () => {
         if (request.readyState == 4) {
 
             var bookCopies = parseXml(request.responseText);
-            console.log(bookCopies);
 
+            const collection = bookCopies?.collection?.bookCopy;
             document.getElementById("requestResponseBookCopy").innerHTML = "";
-            if (bookCopies.bookCopies == undefined || bookCopies.bookCopies.length == 0) {
+            if (collection == undefined || collection.length == 0) {
                 document.getElementById("requestResponseBookCopy").innerHTML = "Books table is empty!";
                 return;
             }
-
-            if (Array.isArray(bookCopies.bookCopies.bookCopies) == false) {
-                document.getElementById("requestResponseBookCopy").innerHTML = bookCopies.bookCopies.bookCopies.copyID["#text"] + "<br>";
+            
+            if (Array.isArray(collection) == false) {
+                document.getElementById("requestResponseBookCopy").innerHTML = bookCopies.bookCopies.bookCopies.bookCopyID["#text"] + "<br>";
             }
             else {
-                bookCopies.bookCopies.bookCopies.forEach((book) => {
-                    document.getElementById("requestResponseBookCopy").innerHTML += book.copyID["#text"] + "<br>";
+                collection.forEach((book) => {
+                    document.getElementById("requestResponseBookCopy").innerHTML += book.bookCopyID["#text"] + "<br>";
                 });
             }
         }
@@ -404,7 +412,7 @@ getAllBookCopies = () => {
 }
 
 deleteBookCopy = () => {
-    var bookCopyId = document.getElementById("bookCopyId").value;
+    var bookCopyId = Number(document.getElementById("bookCopyId").value);
 
     if (bookCopyId == 0) {
         document.getElementById("requestResponseBookCopy").innerHTML = "Field cannot be empty and its value has to be different from 0!";
@@ -428,7 +436,7 @@ deleteBookCopy = () => {
 
 updateBookCopy = () => {
 
-    var bookCopyId = document.getElementById("bookCopyId").value;
+    var bookCopyId = Number(document.getElementById("bookCopyId").value);
 
     if (bookCopyId == 0) {
         document.getElementById("requestResponseBookCopy").innerHTML = "Field cannot be empty and its value has to be different from 0!";
@@ -458,10 +466,9 @@ updateBookCopy = () => {
 // ================================= LENDS ================================= \\
 
 addLend = () => {
-    var readerID = document.getElementById("readerID").value;
-    var bookCopyId = document.getElementById("bookCopyId").value;
+    var readerID = Number(document.getElementById("readerID").value);
+    var bookCopyId = Number(document.getElementById("bookCopyId").value);
     var lendDate = document.getElementById("lendDate").value;
-    var params = '<?xml version="1.0"?><bookCopy><readerID>' + readerID +'</bookID></bookCopy>';
 
     if (readerID == 0) {
         document.getElementById("requestResponseLend").innerHTML = "User id field cannot be empty and its value has to be different from 0!";
@@ -475,7 +482,7 @@ addLend = () => {
     var request = new XMLHttpRequest();
     var params = '<?xml version="1.0"?><lend><lendDate>' + lendDate +'</lendDate></lend>';
 
-    request.open('POST', 'http://localhost:8080/take/library/lends', true);
+    request.open('POST', 'http://localhost:8080/take/library/lends?readerID=' + readerID + '&copyID=' + bookCopyId, true);
     request.setRequestHeader('Content-type', 'application/xml');
 
     request.onreadystatechange = () => {
@@ -491,7 +498,7 @@ addLend = () => {
 }
 
 getLend = () => {
-    var lendID = document.getElementById("lendID").value;
+    var lendID = Number(document.getElementById("lendID").value);
 
     if (lendID == 0) {
         document.getElementById("requestResponseLend").innerHTML = "Field cannot be empty!";
@@ -548,7 +555,7 @@ getAllLends = () => {
 }
 
 deleteLend = () => {
-    var lendId = document.getElementById("lendId").value;
+    var lendID = Number(document.getElementById("lendId").value);
 
     if (lendId == 0) {
         document.getElementById("requestResponseLend").innerHTML = "Field cannot be empty and its value has to be different from 0!";
@@ -571,7 +578,7 @@ deleteLend = () => {
 }
 
 updateLend = () => {
-    var lendId = document.getElementById("lendId").value;
+    var lendID = Number(document.getElementById("lendId").value);
     var lendDate = document.getElementById("startLendDate").value;
     var returnDate = document.getElementById("endLendDate").value;
 
@@ -603,6 +610,7 @@ updateLend = () => {
 // ================================= USERS ================================= \\
 
 addUser = () => {
+    var readerID = Number(document.getElementById('readerID').value);
     var firstName = document.getElementById("firstName").value;
     var lastName = document.getElementById("lastName").value;
     var personalID = document.getElementById("personalID").value;
@@ -615,7 +623,7 @@ addUser = () => {
     }
 
     var request = new XMLHttpRequest();
-    var params = '<?xml version="1.0"?><reader><firstName>' + firstName +'</firstName><lastName>' + lastName + '</lastName><personalID>' + personalID + '</personalID></reader>';
+    var params = '<?xml version="1.0"?><reader><readerID>'+readerID+'</readerID><firstName>' + firstName +'</firstName><lastName>' + lastName + '</lastName><personalID>' + personalID + '</personalID></reader>';
 
     request.open('POST', 'http://localhost:8080/take/library/readers', true);
     request.setRequestHeader('Content-type', 'application/xml');
@@ -633,7 +641,7 @@ addUser = () => {
 }
 
 getUser = () => {
-    var readerID = document.getElementById("readerID").value;
+    var readerID = Number(document.getElementById("readerID").value);
 
     if (readerID == 0) {
         document.getElementById("requestResponseUser").innerHTML = "Field cannot be empty!";
@@ -698,7 +706,7 @@ getAllUsers = () => {
 }
 
 deleteUser = () => {
-    var readerID = document.getElementById("readerID").value;
+    var readerID = Number(document.getElementById("readerID").value);
 
     if (readerID == 0) {
         document.getElementById("requestResponseUser").innerHTML = "Field cannot be empty and its value has to be different from 0!";
@@ -724,7 +732,7 @@ updateUser = () => {
     var firstName = document.getElementById("firstName").value;
     var lastName = document.getElementById("lastName").value;
     var personalID = document.getElementById("personalID").value;
-    var readerID = document.getElementById("readerID").value;
+    var readerID = Number(document.getElementById("readerID").value);
 
     if (firstName.length < 3 || firstName.length > 128 || 
         lastName.length < 3 || lastName.length > 128 ||

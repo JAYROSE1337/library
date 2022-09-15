@@ -6,16 +6,20 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
 
-@Entity
-@Table(name=BookCopy.TABLENAME)
+@Entity(name= BookCopy.TABLENAME)
+@Table(name= BookCopy.TABLENAME)
+@XmlRootElement
 public class BookCopy implements Serializable {
+
+	private static final long serialVersionUID = 4139797928723198344L;
 
 	public static final String TABLENAME = "COPIES";
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)
-	private UUID copyID;
+	private int copyID;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "BOOKS_bookID", referencedColumnName = "bookID")
@@ -24,7 +28,10 @@ public class BookCopy implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY)
 	private List<Lend> lends = new ArrayList<>();
 	
-	public UUID getBookCopyId(){
+	public void setBookCopyID(int id) {
+		this.copyID = id;
+	}
+	public int getBookCopyID(){
 		return this.copyID;
 	}
 

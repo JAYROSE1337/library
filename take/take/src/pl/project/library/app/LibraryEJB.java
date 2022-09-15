@@ -1,7 +1,6 @@
 package pl.project.library.app;
 
 import java.util.List;
-import java.util.UUID;
 
 import javax.ejb.Stateful;
 
@@ -12,7 +11,7 @@ public class LibraryEJB extends BaseDAO {
 
 	// --------- Authors ------------
 
-	public Author getAuthor(UUID readerID) {
+	public Author getAuthor(int readerID) {
 		return get(readerID, Author.class);
 	}
 
@@ -24,7 +23,7 @@ public class LibraryEJB extends BaseDAO {
 		update(reader);
 	}
 
-	public void deleteAuthor(UUID readerID) {
+	public void deleteAuthor(int readerID) {
 		Author reader = getAuthor(readerID);
 		delete(reader);
 	}
@@ -35,7 +34,7 @@ public class LibraryEJB extends BaseDAO {
 
 	// --------- Books ------------
 
-	public Book getBook(UUID bookID) {
+	public Book getBook(int bookID) {
 		return get(bookID, Book.class);
 	}
 
@@ -47,7 +46,7 @@ public class LibraryEJB extends BaseDAO {
 		update(book);
 	}
 
-	public void deleteBook(UUID bookID) {
+	public void deleteBook(int bookID) {
 		Book book = getBook(bookID);
 		delete(book);
 	}
@@ -58,7 +57,7 @@ public class LibraryEJB extends BaseDAO {
 
 	// --------- BookCopies ------------
 
-	public BookCopy getBookCopy(UUID copyID) {
+	public BookCopy getBookCopy(int copyID) {
 		return get(copyID, BookCopy.class);
 	}
 
@@ -70,7 +69,7 @@ public class LibraryEJB extends BaseDAO {
 		update(copy);
 	}
 
-	public void deleteBookCopy(UUID copyID) {
+	public void deleteBookCopy(int copyID) {
 		BookCopy copy = getBookCopy(copyID);
 		delete(copy);
 	}
@@ -81,7 +80,7 @@ public class LibraryEJB extends BaseDAO {
 
 	// --------- Lends ------------
 
-	public Lend getLend(UUID lendID) {
+	public Lend getLend(int lendID) {
 		Lend lend = get(lendID, Lend.class);
 
 		return lend;
@@ -95,8 +94,9 @@ public class LibraryEJB extends BaseDAO {
 		update(lend);
 	}
 
-	public void deleteLend(UUID lendID) {
+	public void deleteLend(int lendID) {
 		Lend lend = getLend(lendID);
+		delete(lend);
 	}
 
 	public List<Lend> getAllLends() {
@@ -105,7 +105,7 @@ public class LibraryEJB extends BaseDAO {
 
 	// --------- Readers ------------
 
-	public Reader getReader(UUID readerID) {
+	public Reader getReader(int readerID) {
 		Reader reader = get(readerID, Reader.class);
 
 		return reader;
@@ -119,8 +119,9 @@ public class LibraryEJB extends BaseDAO {
 		update(reader);
 	}
 
-	public void deleteReader(UUID readerID) {
+	public void deleteReader(int readerID) {
 		Reader reader = getReader(readerID);
+		delete(reader);
 	}
 
 	public List<Reader> getAllReaders() {

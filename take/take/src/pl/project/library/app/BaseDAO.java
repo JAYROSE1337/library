@@ -34,7 +34,7 @@ public class BaseDAO {
 	
 	// ================================= DEDICATED ================================= \\
 	public List<Author> getAuthors() {
-		Query query = em.createQuery(String.format("select * from %s", Author.TABLENAME));
+		Query query = em.createQuery(String.format("select auth from %s auth", Author.TABLENAME));
 		@SuppressWarnings("unchecked")
 		List<Author> authors = query.getResultList();
 
@@ -42,7 +42,7 @@ public class BaseDAO {
 	}
 
 	public List<Book> getBooks() {
-		Query query = em.createQuery(String.format("select * from %s", Book.TABLENAME));
+		Query query = em.createQuery(String.format("select bk from %s bk", Book.TABLENAME));
 		@SuppressWarnings("unchecked")
 		List<Book> books = query.getResultList();
 		
@@ -50,7 +50,7 @@ public class BaseDAO {
 	}
 	
 	public List<BookCopy> getBookCopies() {
-		Query query = em.createQuery(String.format("select * from %s", BookCopy.TABLENAME));
+		Query query = em.createQuery(String.format("select cp from %s cp", BookCopy.TABLENAME));
 		@SuppressWarnings("unchecked")
 		List<BookCopy> copies = query.getResultList();
 		
@@ -58,7 +58,7 @@ public class BaseDAO {
 	}
 	
 	public List<Lend> getLends() {
-		Query query = em.createQuery(String.format("select * from %s", Lend.TABLENAME));
+		Query query = em.createQuery(String.format("select lnd from %s lnd", Lend.TABLENAME));
 		@SuppressWarnings("unchecked")
 		List<Lend> lends = query.getResultList();
 		
@@ -66,7 +66,7 @@ public class BaseDAO {
 	}
 	
 	public List<Reader> getReaders() {
-		Query query = em.createQuery(String.format("select * from %s", Reader.TABLENAME));
+		Query query = em.createQuery(String.format("select rds from %s rds", Reader.TABLENAME));
 		@SuppressWarnings("unchecked")
 		List<Reader> readers = query.getResultList();
 		

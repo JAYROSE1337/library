@@ -13,12 +13,17 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
 
-import pl.project.library.entities.*;
+import pl.project.library.entities.Author;
+import pl.project.library.entities.Book;
+import pl.project.library.entities.BookCopy;
+import pl.project.library.entities.Lend;
+import pl.project.library.entities.Reader;
 
 @Path("/library")
-@Consumes({ "application/xml" })
-@Produces({ "application/xml" })
+@Consumes({MediaType.APPLICATION_XML})
+@Produces({MediaType.APPLICATION_XML})
 public class LibraryREST implements ILibrary {
 
 	@EJB
@@ -27,44 +32,29 @@ public class LibraryREST implements ILibrary {
 	@Override
 	@GET
 	@Path("/authors/{authorID}")
-	public Author getAuthor(@PathParam("authorID") UUID authorID) {
+	public Author getAuthor(@PathParam("authorID") int authorID) {
 		return library.getAuthor(authorID);
 	}
 
 	@Override
 	@POST
 	@Path("/authors")
-	public int addAuthor(Author author) {
-		try {
-			library.addAuthor(author);
-			return 200;
-		} catch (Exception e) {
-			return 400;
-		}
+	public void addAuthor(Author author) {
+		library.addAuthor(author);
 	}
 
 	@Override
 	@PUT
-	@Path("authors")
-	public int updateAuthor(Author author) {
-		try {
-			library.addAuthor(author);
-			return 200;
-		} catch (Exception e) {
-			return 400;
-		}
+	@Path("/authors")
+	public void updateAuthor(Author author) {
+		library.updateAuthor(author);
 	}
 
 	@Override
 	@DELETE
-	@Path("authors/{authorID}")
-	public int deleteAuthor(@PathParam("authorID") UUID authorID) {
-		try {
-			library.deleteAuthor(authorID);
-			return 200;
-		} catch (Exception e) {
-			return 400;
-		}
+	@Path("/authors/{authorID}")
+	public void deleteAuthor(@PathParam("authorID") int authorID) {
+		library.deleteAuthor(authorID);
 	}
 
 	@Override
@@ -77,45 +67,32 @@ public class LibraryREST implements ILibrary {
 	@Override
 	@GET
 	@Path("/books/{bookID}")
-	public Book getBook(@PathParam("bookID") UUID bookID) {
+	public Book getBook(@PathParam("bookID") int bookID) {
 		return library.getBook(bookID);
 	}
 
 	@Override
 	@POST
 	@Path("/books")
-	public int addBook(Book book) {
-		try {
-			library.addBook(book);
-			return 200;
-		} catch (Exception e) {
-			return 400;
-		}
+	public void addBook(@QueryParam("authorID") int authorID, Book book) {
+		Author author = library.getAuthor(authorID);
+		book.setAuthor(author);
+		library.addBook(book);
 	}
 
 	@Override
 	@PUT
 	@Path("/books")
-	public int updateBook(Book book) {
-		try {
-			library.updateBook(book);
-			return 200;
-		} catch (Exception e) {
-			return 400;
-		}
+	public void updateBook(Book book) {
+		library.updateBook(book);
 	}
 
 
 	@Override
 	@DELETE
 	@Path("/books/{bookID}")
-	public int deleteBook(@PathParam("bookID") UUID bookID) {
-		try {
-			library.deleteBook(bookID);
-			return 200;
-		} catch (Exception e) {
-			return 400;
-		}
+	public void deleteBook(@PathParam("bookID") int bookID) {
+		library.deleteBook(bookID);
 	}
 
 	@Override
@@ -128,44 +105,31 @@ public class LibraryREST implements ILibrary {
 	@Override
 	@GET
 	@Path("/copies/{copyID}")
-	public BookCopy getBookCopy(@PathParam("copyID") UUID copyID) {
+	public BookCopy getBookCopy(@PathParam("copyID") int copyID) {
 		return library.getBookCopy(copyID);
 	}
 
 	@Override
 	@POST
 	@Path("/copies")
-	public int addBookCopy(BookCopy copy) {
-		try {
-			library.addBookCopy(copy);
-			return 200;
-		} catch (Exception e) {
-			return 400;
-		}
+	public void addBookCopy(@QueryParam("bookID") int bookID, BookCopy copy) {
+		Book book = library.getBook(bookID);
+		copy.setBook(book);
+		library.addBookCopy(copy);
 	}
 
 	@Override
 	@PUT
 	@Path("/copies")
-	public int updateBookCopy(BookCopy copy) {
-		try {
-			library.updateBookCopy(copy);
-			return 200;
-		} catch (Exception e) {
-			return 400;
-		}
+	public void updateBookCopy(BookCopy copy) {
+		library.updateBookCopy(copy);
 	}
 
 	@Override
 	@DELETE
 	@Path("/copies/{copyID}")
-	public int deleteBookCopy(@PathParam("copyID") UUID copyID) {
-		try {
-			library.deleteBookCopy(copyID);
-			return 200;
-		} catch (Exception e) {
-			return 400;
-		}
+	public void deleteBookCopy(@PathParam("copyID") int copyID) {
+		library.deleteBookCopy(copyID);
 	}
 
 	@Override
@@ -178,44 +142,33 @@ public class LibraryREST implements ILibrary {
 	@Override
 	@GET
 	@Path("/lends/{lendID}")
-	public Lend getLend(@PathParam("lendID") UUID lendID) {
+	public Lend getLend(@PathParam("lendID") int lendID) {
 		return library.getLend(lendID);
 	}
 
 	@Override
 	@POST
 	@Path("/lends")
-	public int addLend(Lend lend) {
-		try {
-			library.addLend(lend);
-			return 200;
-		} catch (Exception e) {
-			return 400;
-		}
+	public void addLend(@QueryParam("copyID") int copyID, @QueryParam("readerID") int readerID, Lend lend) {
+		Reader reader = library.getReader(readerID);
+		BookCopy copy = library.getBookCopy(copyID);
+		lend.setBorrowedCopy(copy);
+		lend.setReader(reader);
+		library.addLend(lend);
 	}
 
 	@Override
 	@PUT
 	@Path("/lends")
-	public int updateLend(Lend lend) {
-		try {
-			library.updateLend(lend);
-			return 200;
-		} catch (Exception e) {
-			return 400;
-		}
+	public void updateLend(Lend lend) {
+		library.updateLend(lend);
 	}
 
 	@Override
 	@DELETE
 	@Path("/lends/{lendID}")
-	public int deleteLend(@PathParam("lendID") UUID lendID) {
-		try {
-			library.deleteLend(lendID);
-			return 200;
-		} catch (Exception e) {
-			return 400;
-		}
+	public void deleteLend(@PathParam("lendID") int lendID) {
+		library.deleteLend(lendID);
 	}
 
 	@Override
@@ -228,44 +181,29 @@ public class LibraryREST implements ILibrary {
 	@Override
 	@GET
 	@Path("/readers/{readerID}")
-	public Reader getReader(@PathParam("readerID") UUID readerID) {
-		return null;
+	public Reader getReader(@PathParam("readerID") int readerID) {
+		return library.getReader(readerID);
 	}
 
 	@Override
 	@POST
 	@Path("/readers")
-	public int addReader(Reader reader) {
-		try {
-			library.addReader(reader);
-			return 200;
-		} catch (Exception e) {
-			return 400;
-		}
+	public void addReader(Reader reader) {
+		library.addReader(reader);
 	}
 
 	@Override
 	@PUT
 	@Path("/readers")
-	public int updateReader(Reader reader) {
-		try {
-			library.updateReader(reader);
-			return 200;
-		} catch (Exception e) {
-			return 400;
-		}
+	public void updateReader(Reader reader) {
+		library.updateReader(reader);
 	}
 
 	@Override
 	@DELETE
 	@Path("/readers/{readerID}")
-	public int deleteReader(@PathParam("readerID") UUID readerID) {
-		try {
-			library.deleteReader(readerID);
-			return 200;
-		} catch (Exception e) {
-			return 400;
-		}
+	public void deleteReader(@PathParam("readerID") int readerID) {
+		library.deleteReader(readerID);
 	}
 
 	@Override

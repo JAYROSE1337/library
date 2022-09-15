@@ -368,6 +368,8 @@
                     <filter-ref name="Access-Control-Allow-Headers"/>
                     <filter-ref name="Access-Control-Allow-Methods"/>
                     <filter-ref name="server-header"/>
+                    <filter-ref name="Accept"/>
+                    <filter-ref name="Accept-Encoding"/>
                     <filter-ref name="x-powered-by-header"/>
                 </host>
             </server>
@@ -380,8 +382,10 @@
             </handlers>
             <filters>
                 <response-header name="Access-Control-Allow-Origin" header-name="Access-Control-Allow-Origin" header-value="*"/>
-                <response-header name="Access-Control-Allow-Headers" header-name="Access-Control-Allow-Headers" header-value="content-type"/>
-                <response-header name="Access-Control-Allow-Methods" header-name="Access-Control-Allow-Methods" header-value="GET, POST, OPTIONS, DELETE, PUT"/>
+                <response-header name="Access-Control-Allow-Headers" header-name="Access-Control-Allow-Headers" header-value="*"/>
+                <response-header name="Access-Control-Allow-Methods" header-name="Access-Control-Allow-Methods" header-value="*"/>
+                <response-header name="Accept" header-name="Accept" header-value="*/*"/>
+                <response-header name="Accept-Encoding" header-name="Accept-Encoding" header-value="*"/>
                 <response-header name="server-header" header-name="Server" header-value="WildFly/10"/>
                 <response-header name="x-powered-by-header" header-name="X-Powered-By" header-value="Undertow/1"/>
             </filters>

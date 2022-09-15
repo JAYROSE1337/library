@@ -1,19 +1,25 @@
 package pl.project.library.entities;
 
 import javax.persistence.*;
+import javax.xml.bind.annotation.XmlRootElement;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Entity
+@Entity(name = Reader.TABLENAME)
 @Table(name = Reader.TABLENAME)
+@XmlRootElement
 public class Reader implements Serializable {
-    public final static String TABLENAME = "READERS";
+
+	private static final long serialVersionUID = 8188100090825309806L;
+
+	public final static String TABLENAME = "READERS";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID readerID;
+    @GeneratedValue(strategy = GenerationType.TABLE)
+    private int readerID;
 
     @Column
     private String firstName;
@@ -24,8 +30,16 @@ public class Reader implements Serializable {
     @Column(nullable = false, unique = true)
     private String personalID;
 
-    @OneToMany(mappedBy = "reader", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "reader", fetch = FetchType.LAZY)
     private List<Lend> lends = new ArrayList<>();
+    
+    public void setReaderID(int id) {
+    	this.readerID = id;
+    }
+    
+    public int getReaderID() {
+    	return readerID;
+    }
 
     public String getFirstName() {
         return firstName;
