@@ -328,7 +328,6 @@ updateBook = () => {
 // ================================= BOOK COPIES ================================= \\
 
 addBookCopy = () => {
-    var copyID = Number(document.getElementById('copyID').value);
     var bookID = Number(document.getElementById("bookID").value);
 
     if (bookID.length < 3) {
@@ -337,7 +336,7 @@ addBookCopy = () => {
     }
 
     var request = new XMLHttpRequest();
-    var params = '<?xml version="1.0"?><bookCopy><bookCopyId>'+copyID+'</bookCopyId></bookCopy>';
+    var params = '<?xml version="1.0"?><bookCopy></bookCopy>';
 
     request.open('POST', 'http://localhost:8080/take/library/copies?bookID=' + bookID, true);
     request.setRequestHeader('Content-type', 'application/xml');
@@ -370,7 +369,7 @@ getBookCopy = () => {
             }
 
             var bookCopy = parseXml(request.responseText);
-            document.getElementById("requestResponseBookCopy").innerHTML = bookCopy.bookCopy.copyID["#text"];
+            document.getElementById("requestResponseBookCopy").innerHTML = bookCopy.bookCopy.bookCopyID["#text"] + ' => Related book: ' + bookCopy.bookCopy.book.title['#text'];
         }
     }
     
@@ -395,11 +394,11 @@ getAllBookCopies = () => {
             }
             
             if (Array.isArray(collection) == false) {
-                document.getElementById("requestResponseBookCopy").innerHTML = bookCopies.bookCopies.bookCopies.bookCopyID["#text"] + "<br>";
+                document.getElementById("requestResponseBookCopy").innerHTML = collection.bookCopyID["#text"] + ' => Related book: ' + collection.book.title['#text'] + "<br>";
             }
             else {
-                collection.forEach((book) => {
-                    document.getElementById("requestResponseBookCopy").innerHTML += book.bookCopyID["#text"] + "<br>";
+                collection.forEach((copy) => {
+                    document.getElementById("requestResponseBookCopy").innerHTML += copy.bookCopyID["#text"] + ' => Related book: ' + copy.book.title['#text'] + "<br>";
                 });
             }
         }
@@ -435,6 +434,7 @@ deleteBookCopy = () => {
 updateBookCopy = () => {
 
     var bookCopyId = Number(document.getElementById("bookCopyId").value);
+    var bookID = Number(document.getElementById("bookID").value);
 
     if (bookCopyId == 0) {
         document.getElementById("requestResponseBookCopy").innerHTML = "Field cannot be empty and its value has to be different from 0!";
@@ -442,9 +442,9 @@ updateBookCopy = () => {
     }
 
     var request = new XMLHttpRequest();
-    var params = '<?xml version="1.0"?><bookCopy><copyID' + bookCopyId + '</copyID</bookCopy>';
+    var params = '<?xml version="1.0"?><bookCopy><copyID>' + bookCopyId + '</copyID></bookCopy>';
 
-    request.open('PUT', 'http://localhost:8080/take/library/updateBookCopy', true);
+    request.open('PUT', 'http://localhost:8080/take/library/copies?bookID=' + bookID, true);
     request.setRequestHeader('Content-type', 'application/xml');
 
     request.onreadystatechange = () => {

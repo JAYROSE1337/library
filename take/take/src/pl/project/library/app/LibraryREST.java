@@ -121,7 +121,9 @@ public class LibraryREST implements ILibrary {
 	@Override
 	@PUT
 	@Path("/copies")
-	public void updateBookCopy(BookCopy copy) {
+	public void updateBookCopy(@QueryParam("bookID") int bookID, BookCopy copy) {
+		Book book = library.getBook(bookID);
+		copy.setBook(book);
 		library.updateBookCopy(copy);
 	}
 

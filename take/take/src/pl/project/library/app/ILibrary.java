@@ -23,7 +23,7 @@ public interface ILibrary {
 
 	public abstract BookCopy getBookCopy(int copyID);
 	public abstract void addBookCopy(int bookID, BookCopy copy);
-	public abstract void updateBookCopy(BookCopy copy);
+	public abstract void updateBookCopy(int bookID, BookCopy copy);
 	public abstract void deleteBookCopy(int copyID);
 	public abstract List<BookCopy> getAllBookCopies();
 
