@@ -18,8 +18,10 @@ public class Author implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private int authorID;
+	
 	@Column(nullable = false)
 	private String firstName;
+	
 	@Column(nullable = false)
 	private String lastName;
 	

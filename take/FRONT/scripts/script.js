@@ -42,7 +42,6 @@ parseXml = (xml, arrayTags) => {
 // ================================= AUTHORS ================================= \\
 
 addAuthor = () => {
-    const ID = Number(document.getElementById("id").value);
     const firstName = document.getElementById("firstName").value;
     const lastName = document.getElementById("lastName").value
 
@@ -52,7 +51,7 @@ addAuthor = () => {
     }
 
     var request = new XMLHttpRequest();
-    const params = '<?xml version="1.0"?><author><authorID>'+ id + '</authorID><firstName>' + firstName +'</firstName><lastName>' + lastName + '</lastName></author>';
+    const params = '<?xml version="1.0"?><author><firstName>' + firstName +'</firstName><lastName>' + lastName + '</lastName></author>';
 
     request.open('POST', 'http://localhost:8080/take/library/authors', true);
     request.setRequestHeader('Content-type', 'application/xml');
@@ -189,7 +188,6 @@ updateAuthor = () => {
 // ================================= BOOKS ================================= \\
 
 addBook = () => {
-    const bookID = Number(document.getElementById('bookID').value);
     const bookTitle = document.getElementById("bookTitle").value;
     const authorID = Number(document.getElementById("authorID").value);
 
@@ -199,7 +197,7 @@ addBook = () => {
     }
 
     var request = new XMLHttpRequest();
-    var params = '<?xml version="1.0"?><book><bookID>' + bookID + '</bookID><title>' + bookTitle +'</title></book>';
+    var params = '<?xml version="1.0"?><book><title>' + bookTitle +'</title></book>';
 
     request.open('POST', 'http://localhost:8080/take/library/books?authorID=' + authorID, true);
     request.setRequestHeader('Content-type', 'application/xml');
@@ -257,11 +255,11 @@ getAllBooks = () => {
             }
 
             if (Array.isArray(collection) == false) {
-                document.getElementById("requestResponse").innerHTML = collection.title["#text"] + "<br>";
+                document.getElementById("requestResponse").innerHTML = collection.bookID['#text'] + " => " + collection.title["#text"] + "<br>";
             }
             else {
                 collection.forEach((el) => {
-                    document.getElementById("requestResponse").innerHTML += " => " + el.title["#text"] + "<br>";
+                    document.getElementById("requestResponse").innerHTML += el.bookID["#text"] + " => " + el.title["#text"] + "<br>";
                 });
             }
         }

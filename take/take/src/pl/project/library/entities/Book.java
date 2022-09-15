@@ -23,7 +23,7 @@ public class Book implements Serializable{
 	public static final String TABLENAME = "BOOKS";
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.TABLE)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private int bookID;
 	
 	@Column(nullable=false)
@@ -36,8 +36,12 @@ public class Book implements Serializable{
 	@OneToMany(mappedBy="book", fetch = FetchType.EAGER)
 	private List<BookCopy> copies = new ArrayList<BookCopy>();
 	
-	public int getBookId() {
+	public int getBookID() {
 		return this.bookID;
+	}
+	
+	public void setBookID(int id) {
+		this.bookID = id;
 	}
 
 	public String getTitle() {
